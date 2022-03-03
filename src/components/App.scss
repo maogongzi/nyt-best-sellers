@@ -1,0 +1,25 @@
+.App {
+  &__header {
+    margin: 0;
+    padding: 10px 20px;
+    border-bottom: 1px solid black;
+  }
+
+  &__content {
+    width: 80%;
+    margin: 0 auto;
+
+    &-footer {
+      margin-bottom: 20px;
+
+      button {
+        padding: 10px 15px;
+        display: inline-block;
+        border: 2px solid;
+        color: #66b1b5;
+        background: transparent;
+        cursor: pointer;
+      }
+    }
+  }
+}

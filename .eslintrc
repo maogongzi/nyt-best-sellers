@@ -1,0 +1,237 @@
+{
+  root: true,
+
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "17.0.1"
+    }
+  },
+
+  parserOptions: {
+    parser: "babel-eslint",
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+      modules: true
+    }
+  },
+
+  env: {
+    // use babel-eslint for ES2020/ES11
+    es2020: true,
+    node: true,
+    browser: true
+  },
+
+  // global variables that should bypass checking, share the same value as
+  // the `externals` field of webpack config
+  // p.s. different app uses different globals
+  globals: {
+    PAGE_PAYLOAD: true,
+    CONFIG: true
+  },
+
+  extends: [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended"
+  ],
+
+  rules: {
+    // us strictly equal operator
+    eqeqeq: "error",
+
+    // don't overuse console output in production code, as some information
+    // are sensitive
+    no-console: "error",
+
+    // line breaks should follow the operators, e.g. the && operator used
+    // inside multiple conditions should be put at the end of the previous line
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        // ternary operators should be placed at the beginning of the line
+        overrides: {
+          "?": "ignore",
+          ":": "ignore"
+        }
+      }
+    ],
+
+    // code blocks must be enclosed by curly brackets
+    curly: "error",
+
+    // key-value pairs inside an object should be put into separated lines
+    "object-property-newline": [
+      "error",
+      {
+        // all properties in the same line is not allowed
+        allowAllPropertiesOnSameLine: false
+      }
+    ],
+
+    // add line breaks for all properties if there is a property has line
+    // break, otherwise keep all of them in the same line
+    "object-curly-newline": [
+      "error",
+      {
+        // 对象申明的花括号，如果不换就都不换，如果换都换，只有一个键值对就不换，为空不换
+        // 只有一个键值对，但是导致本行超长，就要换（比如函数最后一个对象参数里面的键
+        // 是一个超长字符串）
+        ObjectExpression: { consistent: true },
+        // 赋值解构，要换都换，否则不换
+        ObjectPattern: { multiline: true },
+        // import 语句，两个及以上就要换
+        ImportDeclaration: { consistent: true },
+        // export 语句，要换都换，要不换都不换，如果不换导致本行超长，则全部换
+        ExportDeclaration: { consistent: true }
+      }
+    ],
+
+    // always use double quotes
+    quotes: [
+      "error",
+      "double",
+      {
+        // do not escape double quotes which are inside single quote pairs,
+        // the same rule applys to single quotes
+        avoidEscape: true,
+        // allow template literals
+        allowTemplateLiterals: true
+      }
+    ],
+
+    // only wrap up object keys inside quotes when it's necessary
+    // note that if we don't explicitly config this rule the vue eslint plugin
+    // will simply ignore it.
+    "quote-props": ["error", "as-needed"],
+
+    // disable inline comments
+    "no-inline-comments": ["error"],
+
+    // the opening curly bracket of a code block should stay in the end of the
+    // first line
+    "brace-style": [2, "1tbs"],
+
+    // remove blank lines at the beginning and the end of a block
+    "padded-blocks": ["error", "never"],
+
+    // line breaks inside code blocks
+    "padding-line-between-statements": [
+      "error",
+
+      // break line before `if`
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "if"
+      },
+      // break line before `for`
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "for"
+      },
+      // break line before `return`
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "return"
+      },
+      // break line before `function`
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "function"
+      }
+    ],
+
+    // no space between it's name and the parenthesis pairs while calling
+    // a function
+    "func-call-spacing": ["error", "never"],
+
+    // start comments with white spaces, either single line or multi-line
+    // comments
+    "spaced-comment": ["error", "always"],
+
+    "arrow-spacing": ["error"],
+
+    // force using semicolons to end a line
+    semi: ["error", "always"],
+
+    // do not put white spaces before a semicolon, but there must be white
+    // spaces after it.
+    "semi-spacing": [
+      "error",
+      {
+        before: false,
+        after: true
+      }
+    ],
+
+    // put white spaces before a code block
+    "space-before-blocks": ["error"],
+
+    // there must be white spaces around an operator like `+`
+    "space-infix-ops": ["error"],
+
+    // disallow white spaces before colons, but there must be white spaces
+    // after it. e.g. var a = 3, b = 4;
+    "comma-spacing": [
+      "error",
+      {
+        before: false,
+        after: true
+      }
+    ],
+
+    // disallow multiple white spaces. e.g. let    a =  33;
+    "no-multi-spaces": ["error"],
+
+    // put white spaces around keywords. e.g. if (xxx)
+    "keyword-spacing": [
+      "error",
+      {
+        before: true,
+        after: true
+      }
+    ],
+
+    // disallow trailing commas, including: array/object/export/import/function
+    "comma-dangle": [
+      "error",
+      {
+        // after the last argument of a function there shouldn't be commas
+        functions: "never"
+      }
+    ],
+
+    // put white spaces after object keys
+    "key-spacing": ["error", { afterColon: true }],
+
+    // maximum line length up to 80 characters
+    "max-len": [
+      "error",
+      {
+        code: 80,
+        // ignore tempelate literals that exceeds the limit
+        ignoreTemplateLiterals: true,
+        // ignore regexp literals
+        ignoreRegExpLiterals: true,
+        // ignore urls
+        ignoreUrls: true,
+        // ignore import states
+        ignorePattern: "^\\s*import\\s+.+\\s+from\\s+.+;$"
+      }
+    ],
+
+    // break lines for every argument of a function simultaneously if one
+    // of them has line break.
+    "function-paren-newline": ["error", "consistent"],
+
+    // disable this rule
+    "react/prop-types": 0
+  }
+}
